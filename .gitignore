@@ -1,0 +1,8 @@
+.idea/
+venv/
+*/__pycache__/
+*/migrations/
+db.sqlite3
+movies_playground/settings.py
+*.pyc
+

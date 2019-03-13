@@ -1,0 +1,2 @@
+class OmdbApiResponseException(Exception):
+    pass
