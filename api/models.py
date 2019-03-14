@@ -12,7 +12,7 @@ class Movie(models.Model):
     writer = models.CharField(max_length=128)
     actors = models.ManyToManyField('Actor')
     plot = models.CharField(max_length=512)
-    languages = models.ManyToManyField('Language')
+    languages = models.CharField(max_length=32)
     countries = models.CharField(max_length=32)
     awards = models.CharField(max_length=128)
     poster = models.CharField(max_length=256)
@@ -20,7 +20,7 @@ class Movie(models.Model):
     metascore = models.CharField(max_length=4)
     imdbRating = models.CharField(max_length=4)
     imdbVotes = models.CharField(max_length=16)
-    imdbId = models.CharField(max_length=16)
+    imdbID = models.CharField(max_length=16)
     totalSeasons = models.CharField(max_length=10, default='N/A')
     type = models.CharField(max_length=16)
     dvd = models.CharField(max_length=16)
@@ -43,20 +43,6 @@ class Actor(models.Model):
         return self.name
 
 
-class Language(models.Model):
-    name = models.CharField(max_length=16)
-
-    def __str__(self):
-        return self.name
-
-
 class Rating(models.Model):
-    source = models.ForeignKey('RatingSource', on_delete=models.CASCADE)
+    source = models.CharField(max_length=32)
     value = models.CharField(max_length=32)
-
-
-class RatingSource(models.Model):
-    name = models.CharField(max_length=32)
-
-    def __str__(self):
-        return self.name
