@@ -27,6 +27,9 @@ from api import views
 router = routers.DefaultRouter()
 router.trailing_slash = ''
 router.register('movies', views.MovieViewSet)
+router.register('genre', views.GenreViewSet)
+router.register('actor', views.ActorViewSet)
+router.register('language', views.LanguageViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

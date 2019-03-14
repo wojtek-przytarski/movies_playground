@@ -13,5 +13,6 @@ class OmdbApiHandler(ExternalApiHandler):
         parameters = {'apikey': self.api_key, 't': title}
         result = self._get(self.base_url, parameters)
         if result.get('Error'):
-            raise OmdbApiResponseException('Error encountered when getting movie from OMDb'.format(result.get('Error')))
+            raise OmdbApiResponseException(
+                'Error encountered when getting movie from OMDb: {}'.format(result.get('Error')))
         return result

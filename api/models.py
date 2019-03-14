@@ -3,7 +3,7 @@ from django.db import models
 
 class Movie(models.Model):
     title = models.CharField(max_length=64)
-    year = models.CharField(max_length=4)
+    year = models.CharField(max_length=10)
     released = models.CharField(max_length=16)
     director = models.CharField(max_length=32)
     runtime = models.CharField(max_length=16)
@@ -18,12 +18,13 @@ class Movie(models.Model):
     poster = models.CharField(max_length=256)
     ratings = models.ManyToManyField('Rating')
     metascore = models.CharField(max_length=4)
-    imdb_rating = models.CharField(max_length=4)
-    imdb_votes = models.CharField(max_length=16)
-    imdb_id = models.CharField(max_length=16)
+    imdbRating = models.CharField(max_length=4)
+    imdbVotes = models.CharField(max_length=16)
+    imdbId = models.CharField(max_length=16)
+    totalSeasons = models.CharField(max_length=10, default='N/A')
     type = models.CharField(max_length=16)
     dvd = models.CharField(max_length=16)
-    box_office = models.CharField(max_length=16)
+    boxOffice = models.CharField(max_length=16)
     production = models.CharField(max_length=32)
     website = models.CharField(max_length=64)
 
