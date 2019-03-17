@@ -18,6 +18,19 @@ class MovieProxy:
         movie = self._add_movie_from_omdb_result(movie_args)
         return movie
 
+    def get_movie_queryset(self, **kwargs):
+        queryset = Movie.objects.all()
+        director = kwargs.get('director')
+        actor = kwargs.get('actor')
+        genre = kwargs.get('genre')
+        if director:
+            queryset = queryset.filter(director__icontains=director)
+        if actor:
+            queryset = queryset.filter(actors__name__icontains=actor)
+        if genre:
+            queryset = queryset.filter(genre__name__iexact=genre)
+        return queryset
+
     def _add_movie_from_omdb_result(self, movie_args):
         foreign_key_values = {'actors': self._get_actor_set(movie_args.get('actors')),
                               'genre': self._get_genre_set(movie_args.get('genre')),

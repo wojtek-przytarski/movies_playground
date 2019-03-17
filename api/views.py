@@ -41,3 +41,9 @@ class MovieViewSet(viewsets.ModelViewSet):
         except Exception as ex:
             logger.error('Unexpected error: {}'.format(ex))
             return JsonResponse({'Error': 'Error occured, please try again later.'})
+
+    def get_queryset(self):
+        filter_kwargs = {'genre': self.request.query_params.get('genre'),
+                         'actor': self.request.query_params.get('actor'),
+                         'director': self.request.query_params.get('director')}
+        return self.movie_proxy.get_movie_queryset(**filter_kwargs)
