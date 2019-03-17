@@ -23,12 +23,9 @@ class MovieProxy:
         director = kwargs.get('director')
         actor = kwargs.get('actor')
         genre = kwargs.get('genre')
-        if director:
-            queryset = queryset.filter(director__icontains=director)
-        if actor:
-            queryset = queryset.filter(actors__name__icontains=actor)
-        if genre:
-            queryset = queryset.filter(genre__name__iexact=genre)
+        queryset = queryset.filter(director__icontains=director) if director else queryset
+        queryset = queryset.filter(actors__name__icontains=actor) if actor else queryset
+        queryset = queryset.filter(genre__name__iexact=genre) if genre else queryset
         return queryset
 
     def _add_movie_from_omdb_result(self, movie_args):
@@ -51,7 +48,7 @@ class MovieProxy:
         actor_set = set()
         for actor_name in omdb_actor.split(', '):
             try:
-                actor_set.add(Actor.objects.get(name__icontains=actor_name))
+                actor_set.add(Actor.objects.get(name=actor_name))
             except Actor.DoesNotExist:
                 a = Actor(name=actor_name)
                 a.save()
@@ -63,7 +60,7 @@ class MovieProxy:
         genre_set = set()
         for genre_name in omdb_genre.split(', '):
             try:
-                genre_set.add(Genre.objects.get(name__icontains=genre_name))
+                genre_set.add(Genre.objects.get(name=genre_name))
             except Genre.DoesNotExist:
                 g = Genre(name=genre_name)
                 g.save()
