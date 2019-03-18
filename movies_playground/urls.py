@@ -19,14 +19,10 @@ from rest_framework import routers
 from api import views
 
 
-# class OptionalSlashRouter(routers.DefaultRouter):
-#
-#     def __init__(self):
-#         self.trailing_slash = '/?'
-#         super(routers.DefaultRouter, self).__init__()
 router = routers.DefaultRouter()
 router.trailing_slash = ''
 router.register('movies', views.MovieViewSet)
+router.register('comments', views.CommentViewSet)
 router.register('genre', views.GenreViewSet)
 router.register('actor', views.ActorViewSet)
 

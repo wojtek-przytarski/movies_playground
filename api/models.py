@@ -46,3 +46,8 @@ class Actor(models.Model):
 class Rating(models.Model):
     source = models.CharField(max_length=32)
     value = models.CharField(max_length=32)
+
+
+class Comment(models.Model):
+    body = models.CharField(max_length=1024)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
