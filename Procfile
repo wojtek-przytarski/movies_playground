@@ -1,1 +1,1 @@
-web: gunicorn myproject.wsgi
+web: gunicorn movies_playground.wsgi
