@@ -19,6 +19,8 @@ def top(request):
     date_to = request.GET.get('to')
     if not date_from or not date_to:
         return JsonResponse({'Error': 'Invalid request. Please provide \'from\' and \'to\' in request.'})
+    if date_from > date_to:
+        return JsonResponse({'Error': 'Invalid request. \'from\' should be less or equal than \'to\' in request.'})
     date_range = [date_from, date_to]
     try:
         queryset = Movie.objects.values('id', 'comment__id')
