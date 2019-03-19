@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'movies_playground.wsgi.application'
 DATABASES = {
     "default":
         {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",  # one of those should work
-            # 'ENGINE': 'django.db.backends.postgresql',  # one of those should work
-            "NAME": 'movies_playground',
+            # "ENGINE": "django.db.backends.postgresql_psycopg2",  # one of those should work
+            'ENGINE': 'django.db.backends.postgresql',  # one of those should work
+            "NAME": 'shielded-wave-76701',
             "HOST": "postgres://ossxeyneevltin:2ddfa05255fb83e138523c72afcebb4c7a1d375a0082b255237784964577802c@ec2-54-83-61-142.compute-1.amazonaws.com:5432/dcurkb6peqojpp",
             "PORT": "5432",
         }
