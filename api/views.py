@@ -1,15 +1,15 @@
 from venv import logger
 
 from django.core.exceptions import ValidationError
-from django.db.models import Count, Window, F
-from django.db.models.functions import Rank, DenseRank
-from django.http import JsonResponse, HttpResponse
+from django.db.models import Count, Window, F, IntegerField, Case, When
+from django.db.models.functions import DenseRank
+from django.http import JsonResponse
 from rest_framework import viewsets
 
 from api.exceptions import OmdbApiResponseException
 from api.externalapihandler.movie_proxy import MovieProxy
 from api.externalapihandler.omdb_api_handler import OmdbApiHandler
-from api.models import Movie, Actor, Genre, Rating, Comment
+from api.models import Movie, Actor, Genre, Comment
 from api.serializers import MovieSerializer, GenreSerializer, ActorSerializer, CommentSerializer
 from movies_playground.settings import OMDB_API_KEY
 
@@ -20,10 +20,12 @@ def top(request):
     if not date_from or not date_to:
         return JsonResponse({'Error': 'Invalid request. Please provide \'from\' and \'to\' in request.'})
     date_range = [date_from, date_to]
-    dense_rank = Window(expression=DenseRank(), order_by=F('total_comments').desc())
     try:
-        queryset = Comment.objects.filter(posting_date__range=date_range)
-        statistics = queryset.values('movie_id').annotate(total_comments=Count('movie_id')).annotate(rank=dense_rank)
+        queryset = Movie.objects.values('id', 'comment__id')
+        comments_count = Count(Case(When(comment__posting_date__range=date_range, then=1), output_field=IntegerField()))
+        dense_rank = Window(expression=DenseRank(), order_by=F('total_comments').desc())
+        statistics = queryset.values('id').annotate(movie_id=F('id'), total_comments=comments_count).annotate(
+            rank=dense_rank).values('movie_id', 'total_comments', 'rank')
         return JsonResponse(list(statistics), safe=False)
     except ValidationError:
         return JsonResponse(
