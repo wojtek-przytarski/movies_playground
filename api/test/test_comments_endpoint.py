@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.utils import json
@@ -32,15 +34,18 @@ class CommentsEndpointTestCase(TestCase):
         response_dict = json.loads(response.content)
         assert response_dict.get('Error') == 'Invalid request. Please provide \'movie_id\' and \'body\' in request.'
 
-    def test_get_comments_returns_expected_dict(self):
-        expected_data = [{'id': 1, 'movie_id': 12, 'body': 'This is pre-added comment.'},
-                         {'id': 2, 'movie_id': 31, 'body': 'This is pre-added comment.'}]
+    def test_get_comments_returns_expected_data(self):
+        today = str(date.today())
+        expected_data = [{'id': 1, 'movie_id': 12, 'body': 'This is pre-added comment.', 'posting_date': today},
+                         {'id': 2, 'movie_id': 31, 'body': 'This is pre-added comment.', 'posting_date': today}]
         response = self.client.get('/comments')
+        print(response.content)
         data = json.loads(response.content)
         assert data == expected_data
 
-    def test_get_comments_by_movie_id_returns_expected_dict(self):
-        expected_data = [{'id': 1, 'movie_id': 12, 'body': 'This is pre-added comment.'}]
+    def test_get_comments_by_movie_id_returns_data(self):
+        today = str(date.today())
+        expected_data = [{'id': 1, 'movie_id': 12, 'body': 'This is pre-added comment.', 'posting_date': today}]
         response = self.client.get('/comments', {'movie_id': 12})
         data = json.loads(response.content)
         assert expected_data == data

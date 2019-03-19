@@ -1,6 +1,9 @@
 from venv import logger
 
-from django.http import JsonResponse
+from django.core.exceptions import ValidationError
+from django.db.models import Count, Window, F
+from django.db.models.functions import Rank, DenseRank
+from django.http import JsonResponse, HttpResponse
 from rest_framework import viewsets
 
 from api.exceptions import OmdbApiResponseException
@@ -9,6 +12,22 @@ from api.externalapihandler.omdb_api_handler import OmdbApiHandler
 from api.models import Movie, Actor, Genre, Rating, Comment
 from api.serializers import MovieSerializer, GenreSerializer, ActorSerializer, CommentSerializer
 from movies_playground.settings import OMDB_API_KEY
+
+
+def top(request):
+    date_from = request.GET.get('from')
+    date_to = request.GET.get('to')
+    if not date_from or not date_to:
+        return JsonResponse({'Error': 'Invalid request. Please provide \'from\' and \'to\' in request.'})
+    date_range = [date_from, date_to]
+    dense_rank = Window(expression=DenseRank(), order_by=F('total_comments').desc())
+    try:
+        queryset = Comment.objects.filter(posting_date__range=date_range)
+        statistics = queryset.values('movie_id').annotate(total_comments=Count('movie_id')).annotate(rank=dense_rank)
+        return JsonResponse(list(statistics), safe=False)
+    except ValidationError:
+        return JsonResponse(
+            {'Error': 'Invalid parameters type.\'from\' and \'to\' should be date in format YYYY-MM-DD.'})
 
 
 class GenreViewSet(viewsets.ModelViewSet):

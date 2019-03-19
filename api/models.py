@@ -51,3 +51,4 @@ class Rating(models.Model):
 class Comment(models.Model):
     body = models.CharField(max_length=1024)
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
+    posting_date = models.DateField(auto_now_add=True, blank=True)

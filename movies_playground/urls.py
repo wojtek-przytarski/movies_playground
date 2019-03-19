@@ -28,5 +28,6 @@ router.register('actor', views.ActorViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('top', views.top),
     path('', include(router.urls))
 ]
