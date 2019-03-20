@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import django_heroku
+# import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'dd6a2n7qy3$srcee*hql!xzsizl!+w(ie=*8gwd&2-7(^xljpa'
 
 OMDB_API_KEY = 'c0b35c21'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -82,21 +82,11 @@ WSGI_APPLICATION = 'movies_playground.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 DATABASES = {
-    "default":
-        {
-            # "ENGINE": "django.db.backends.postgresql_psycopg2",  # one of those should work
-            'ENGINE': 'django.db.backends.postgresql',  # one of those should work
-            "NAME": 'shielded-wave-76701',
-            "HOST": "postgres://ossxeyneevltin:2ddfa05255fb83e138523c72afcebb4c7a1d375a0082b255237784964577802c@ec2-54-83-61-142.compute-1.amazonaws.com:5432/dcurkb6peqojpp",
-            "PORT": "5432",
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 # Password validation
@@ -138,4 +128,4 @@ APPEND_SLASH = False
 STATIC_URL = '/static/'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
