@@ -34,9 +34,7 @@ class TrailersTestCase(TestCase):
     def test_add_trailer(self):
         response = self.client.post('/trailers', {'movie': 12, 'url': 'http://yt.sd/asd/asd',
                                                   'description': 'it will be nice movie!', 'title': 'Trailer'})
-        print(response.content)
         assert Trailer.objects.all().count() == 2
-        print(json.loads(response.content))
 
     def test_get_trailers(self):
         response = self.client.get('/trailers')
