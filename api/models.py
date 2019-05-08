@@ -52,3 +52,10 @@ class Comment(models.Model):
     body = models.CharField(max_length=1024)
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
     posting_date = models.DateField(auto_now_add=True, blank=True)
+
+
+class Trailer(models.Model):
+    title = models.CharField(max_length=64)
+    url = models.URLField(max_length=256)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
+    description = models.CharField(max_length=256)

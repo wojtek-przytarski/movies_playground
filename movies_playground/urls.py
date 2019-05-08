@@ -25,6 +25,7 @@ router.register('movies', views.MovieViewSet)
 router.register('comments', views.CommentViewSet)
 router.register('genre', views.GenreViewSet)
 router.register('actor', views.ActorViewSet)
+router.register('trailers', views.TrailerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Movie, Genre, Actor, Rating, Comment
+from api.models import Movie, Genre, Actor, Rating, Comment, Trailer
 
 
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,3 +34,10 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'movie_id', 'body', 'posting_date')
+
+
+class TrailerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Trailer
+        # fields = '__all__'
+        fields = ('id', 'movie', 'title', 'description', 'url')

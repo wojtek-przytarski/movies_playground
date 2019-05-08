@@ -9,8 +9,8 @@ from rest_framework import viewsets
 from api.exceptions import OmdbApiResponseException
 from api.externalapihandler.movie_proxy import MovieProxy
 from api.externalapihandler.omdb_api_handler import OmdbApiHandler
-from api.models import Movie, Actor, Genre, Comment
-from api.serializers import MovieSerializer, GenreSerializer, ActorSerializer, CommentSerializer
+from api.models import Movie, Actor, Genre, Comment, Trailer
+from api.serializers import MovieSerializer, GenreSerializer, ActorSerializer, CommentSerializer, TrailerSerializer
 from movies_playground.settings import OMDB_API_KEY
 
 
@@ -96,3 +96,9 @@ class MovieViewSet(viewsets.ModelViewSet):
                          'actor': self.request.query_params.get('actor'),
                          'director': self.request.query_params.get('director')}
         return self.movie_proxy.get_movie_queryset(**filter_kwargs)
+
+
+class TrailerViewSet(viewsets.ModelViewSet):
+    queryset = Trailer.objects.all()
+    serializer_class = TrailerSerializer
+    http_method_names = ['post', 'get']
