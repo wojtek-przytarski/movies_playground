@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = 'dd6a2n7qy3$srcee*hql!xzsizl!+w(ie=*8gwd&2-7(^xljpa'
+SECRET_KEY = os.environ['MOVIES_PLAYGROUND_SECRET_KEY']
 
-OMDB_API_KEY = 'c0b35c21'
+OMDB_API_KEY = os.environ['OMDB_API_KEY']
 
 DEBUG = True
 
