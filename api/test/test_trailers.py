@@ -17,6 +17,7 @@ class TrailersTestCase(TestCase):
         Movie(id=31, title='Testing IT 2').save()
         Movie(id=66, title='Testing IT 3').save()
         Movie(id=78, title='Testing IT 4').save()
+        Trailer(movie_id=12, title='Testing trailer', description='tests', url='http://asdasd.asd/as').save()
         self._add_comment_with_date(12, '2014-12-04')
         self._add_comment_with_date(31, '2015-01-04')
         self._add_comment_with_date(66, '2016-02-28')
@@ -34,5 +35,9 @@ class TrailersTestCase(TestCase):
         response = self.client.post('/trailers', {'movie': 12, 'url': 'http://yt.sd/asd/asd',
                                                   'description': 'it will be nice movie!', 'title': 'Trailer'})
         print(response.content)
-        assert Trailer.objects.all().count() == 1
+        assert Trailer.objects.all().count() == 2
+        print(json.loads(response.content))
+
+    def test_get_trailers(self):
+        response = self.client.get('/trailers')
         print(json.loads(response.content))
