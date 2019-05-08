@@ -47,24 +47,18 @@ class MovieProxy:
     def _get_actor_set(omdb_actor):
         actor_set = set()
         for actor_name in omdb_actor.split(', '):
-            try:
-                actor_set.add(Actor.objects.get(name=actor_name))
-            except Actor.DoesNotExist:
-                a = Actor(name=actor_name)
-                a.save()
-                actor_set.add(a)
+            actor = Actor.objects.get_or_create(name=actor_name)
+            actor.save()
+            actor_set.add(actor)
         return actor_set
 
     @staticmethod
     def _get_genre_set(omdb_genre):
         genre_set = set()
         for genre_name in omdb_genre.split(', '):
-            try:
-                genre_set.add(Genre.objects.get(name=genre_name))
-            except Genre.DoesNotExist:
-                g = Genre(name=genre_name)
-                g.save()
-                genre_set.add(g)
+            genre = Genre.objects.get_or_create(name=genre_name)
+            genre.save()
+            genre_set.add(genre)
         return genre_set
 
     @staticmethod
